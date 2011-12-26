@@ -1,0 +1,81 @@
+<!DOCTYPE html>
+<html>
+<head>
+<meta charset=utf-8 />
+<title>RomBots background cutter</title>
+<!--[if IE]>
+  <script src="http://html5shiv.googlecode.com/svn/trunk/html5.js"></script>
+<![endif]-->
+<style>
+  article, aside, figure, footer, header, hgroup, 
+  menu, nav, section { display: block; }
+</style>
+
+<link class="jsbin" href="http://ajax.googleapis.com/ajax/libs/jqueryui/1/themes/base/jquery-ui.css" rel="stylesheet" type="text/css" />
+<script class="jsbin" src="http://ajax.googleapis.com/ajax/libs/jquery/1/jquery.min.js"></script>
+<script class="jsbin" src="http://ajax.googleapis.com/ajax/libs/jqueryui/1.8.13/jquery-ui.min.js"></script>
+
+
+<script type="text/javascript" src="test_cut_tex.js" ></script>
+
+</head>
+<body>
+  <canvas id="myCanvas" width="300" height="300"></canvas>
+ <p>
+ number of tiles:
+  <input id="numTiles" value="16" />
+  <ul>
+  <li>Instructiuni: - load img  </li>
+    <li> - cut  </li>
+        <li> -save  </li>
+            <li> - save as...  </li>
+  </ul>
+  
+  <a id="cutBtn">Cut</a>
+  <a id="saveBtn">save</a>
+
+  <img id="bgImage" src="" />
+
+  <script>
+  init_JQuery();
+  </script>
+
+
+<input type="file" id="files" name="files[]" multiple />
+<output id="list"></output>
+
+<script>
+
+function handleReaderLoadEnd(evt) {
+  image = document.getElementById('bgImage');
+  image.src = evt.target.result;
+}
+
+  function handleFileSelect(evt) {
+    var files = evt.target.files; // FileList object
+
+    // files is a FileList of File objects. List some properties.
+    var output = [];
+    for (var i = 0, f; f = files[i]; i++) {
+      output.push('<li><strong>', f.name, '</strong> (', f.type || 'n/a', ') - ',
+                  f.size, ' bytes</li>');
+
+    var reader = new FileReader();
+    reader.onloadend  = handleReaderLoadEnd;
+     
+    reader.readAsDataURL(f);           
+}
+    document.getElementById('list').innerHTML = '<ul>' + output.join('') + '</ul>';
+
+
+  }
+
+  document.getElementById('files').addEventListener('change', handleFileSelect, false);
+
+  
+
+</script>
+
+</body>
+</html>
+
