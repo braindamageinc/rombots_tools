@@ -17,9 +17,24 @@ var imageObj;
 var numColumns = 10;     //<!-- cate coloane are fisierul (TOTAL) -->
 var numRows = 1;       // <!-- cate randuri are fisierul (TOTAL) -->
 var refreshRate = 100; // <!-- framerate in milisecunde -->
-var imageFile = "alien.png"; //<!-- fisierul cu anim. -->
 var flipVertical = false;// <!-- daca sa flipui spriteul cand desenez -->
+var imageFileSrc = null;
+var refreshInterval = null;
 //<!--  STOP  -->
+
+function init_JQuery() {
+
+$("#refreshBtn").button().click(function() {
+    
+    if (refreshInterval != null)
+        window.clearInterval(refreshInterval);
+    
+    if (imageFileSrc != null)
+        initAnimation(imageFileSrc);
+
+});
+
+}
 
 function refreshImg() 
 {
@@ -38,15 +53,20 @@ function refreshImg()
     }
  
 context.drawImage(imageObj, sourceX, sourceY, sourceWidth,
-	sourceHeight, destX, destY, destWidth, destHeight);
+    sourceHeight, destX, destY, destWidth, destHeight);
 
 }
 
-window.onload = function(){
+function initAnimation(imageFile) {
+    
 imageObj = new Image();
-   canvas = document.getElementById("myCanvas");
-   context = canvas.getContext("2d");
- 
+canvas = document.getElementById("myCanvas");
+context = canvas.getContext("2d");
+
+numColumns = document.getElementById("numCols").value;
+numRows = document.getElementById("numRows").value;
+refreshRate = document.getElementById("numRefreshMs").value;
+
     imageObj.onload = function(){
         
         sourceWidth = imageObj.width / numColumns;
@@ -61,13 +81,16 @@ imageObj = new Image();
         }
         
         context.drawImage(imageObj, sourceX, sourceY, sourceWidth,
-	sourceHeight, destX, destY, destWidth, destHeight);
+	        sourceHeight, destX, destY, destWidth, destHeight);
 
-   window.setInterval(refreshImg, refreshRate);
-    
+        if (refreshInterval != null)
+            window.clearInterval(refreshInterval);
+
+       refreshInterval = window.setInterval(refreshImg, refreshRate);
     };
-    imageObj.src = imageFile;
-  
+
+imageObj.src = imageFile;
+imageFileSrc = imageFile;  
 
 };
 

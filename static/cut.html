@@ -51,7 +51,7 @@ function handleReaderLoadEnd(evt) {
   image.src = evt.target.result;
 }
 
-  function handleFileSelect(evt) {
+function handleFileSelect(evt) {
     var files = evt.target.files; // FileList object
 
     // files is a FileList of File objects. List some properties.
@@ -64,15 +64,13 @@ function handleReaderLoadEnd(evt) {
     reader.onloadend  = handleReaderLoadEnd;
      
     reader.readAsDataURL(f);           
-}
+    }
+    
     document.getElementById('list').innerHTML = '<ul>' + output.join('') + '</ul>';
 
-
-  }
-
-  document.getElementById('files').addEventListener('change', handleFileSelect, false);
-
+}
   
+document.getElementById('files').addEventListener('change', handleFileSelect, false);
 
 </script>
 

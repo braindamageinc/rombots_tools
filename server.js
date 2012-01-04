@@ -1,7 +1,10 @@
 var connect = require("connect");
 
-connect.createServer(
-    connect.logger(),
-    connect.static(__dirname + "/static")
-).listen(process.env.PORT);
+var app = connect.createServer();
+
+app.use(connect.logger());
+app.use("/", connect.static(__dirname + "/static"));
+//app.use("/", connect.directory(__dirname + "/node_modules"));
+
+app.listen(process.env.PORT);
 

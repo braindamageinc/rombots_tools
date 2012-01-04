@@ -8,10 +8,72 @@
   menu, nav, section { display: block; }
 </style>
 
+<link class="jsbin" href="http://ajax.googleapis.com/ajax/libs/jqueryui/1/themes/base/jquery-ui.css" rel="stylesheet" type="text/css" />
+<script class="jsbin" src="http://ajax.googleapis.com/ajax/libs/jquery/1/jquery.min.js"></script>
+<script class="jsbin" src="http://ajax.googleapis.com/ajax/libs/jqueryui/1.8.13/jquery-ui.min.js"></script>
+
+
 <script type="text/javascript" src="test_anim.js"></script>
 </head>
 <body>
-  <canvas id="myCanvas" width="300" height="300"/>
+
+<input type="file" id="files" name="files[]" multiple />
+<output id="list"></output>
+
+<p>
+number of rows:
+  <input id="numRows" value="1" />
+
+<p>
+number of columns:
+  <input id="numCols" value="5" />
+
+<p>
+refresh rate (milisec):
+  <input id="numRefreshMs" value="100" />
+
+
+<p>
+<a id="refreshBtn">Refresh anim</a>
+
+<p>
+<canvas id="myCanvas" width="300" height="300"/>
+
+<script>
+init_JQuery();
+</script>
+
+
+<script>
+
+function handleReaderLoadEnd(evt) {  
+  var imgFileURL = evt.target.result;
+  
+  initAnimation(imgFileURL);
+}
+
+function handleFileSelect(evt) {
+    var files = evt.target.files; // FileList object
+
+    // files is a FileList of File objects. List some properties.
+    var output = [];
+    for (var i = 0, f; f = files[i]; i++) {
+      output.push('<li><strong>', f.name, '</strong> (', f.type || 'n/a', ') - ',
+                  f.size, ' bytes</li>');
+
+    var reader = new FileReader();
+    reader.onloadend  = handleReaderLoadEnd;
+     
+    reader.readAsDataURL(f);           
+    }
     
+    document.getElementById('list').innerHTML = '<ul>' + output.join('') + '</ul>';
+
+}
+  
+document.getElementById('files').addEventListener('change', handleFileSelect, false);
+
+</script>
+
 </body>
 </html>
