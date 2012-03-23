@@ -13,15 +13,15 @@ var destHeight;
 
 var imageObj;
 
-<!-- MODIFICA PENTRU FIECARE ANIMATIE !!! -->
-var numColumns = 10;     <!-- cate coloane are fisierul (TOTAL) -->
-var numRows = 1;        <!-- cate randuri are fisierul (TOTAL) -->
-var refreshRate = 180;  <!-- framerate in milisecunde -->
-var imageFile = "nivel_partat.png"; <!-- fisierul cu anim. -->
-var flipVertical = false; <!-- daca sa flipui spriteul cand desenez -->
+// MODIFICA PENTRU FIECARE ANIMATIE !!! -->
+var numColumns = 10;    // <!-- cate coloane are fisierul (TOTAL) -->
+var numRows = 1;        //<!-- cate randuri are fisierul (TOTAL) -->
+var refreshRate = 180;  //<!-- framerate in milisecunde -->
+var imageFile = "nivel_partat.png"; //<!-- fisierul cu anim. -->
+var flipVertical = false; //<!-- daca sa flipui spriteul cand desenez -->
 var extraPixelsBottom = 1;
 var extraPixelsTop = 1;
-<!--  STOP  -->
+//<!--  STOP  -->
 
 
 function init_JQuery() {
