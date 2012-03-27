@@ -2,10 +2,16 @@
 <html>
 <head>
 <meta charset=utf-8 />
-<title>Test animation sheet</title>
+<title>Create animation sheet</title>
 <style>
   article, aside, figure, footer, header, hgroup, 
   menu, nav, section { display: block; }
+  
+  .thumb {
+    height: 75px;
+    border: 1px solid #000;
+    margin: 10px 5px 0 0;
+  }
 </style>
 
 <link class="jsbin" href="http://ajax.googleapis.com/ajax/libs/jqueryui/1/themes/base/jquery-ui.css" rel="stylesheet" type="text/css" />
@@ -13,7 +19,7 @@
 <script class="jsbin" src="http://ajax.googleapis.com/ajax/libs/jqueryui/1.8.13/jquery-ui.min.js"></script>
 
 
-<script type="text/javascript" src="test_anim.js"></script>
+<script type="text/javascript" src="create_anim.js"></script>
 </head>
 <body>
 
@@ -21,23 +27,10 @@
 <output id="list"></output>
 
 <p>
-number of rows:
-  <input id="numRows" value="1" />
+<a id="saveBtn">Save anim sheet</a>
 
 <p>
-number of columns:
-  <input id="numCols" value="5" />
-
-<p>
-refresh rate (milisec):
-  <input id="numRefreshMs" value="100" />
-
-
-<p>
-<a id="refreshBtn">Refresh anim</a>
-
-<p>
-<canvas id="myCanvas" width="600" height="600"/>
+<canvas id="myCanvas" width="300" height="300"/>
 
 <script>
 init_JQuery();
@@ -46,14 +39,22 @@ init_JQuery();
 
 <script>
 
+
 function handleReaderLoadEnd(evt) {  
   var imgFileURL = evt.target.result;
-  
-  initAnimation(imgFileURL);
+ 
+   // Render thumbnail.
+   var span = document.createElement('span');
+   span.innerHTML = ['<img class="thumb" src="',imgFileURL, '"/>'].join('');
+   document.getElementById('list').insertBefore(span, null);
+   
+   addFrame(imgFileURL);
 }
 
 function handleFileSelect(evt) {
     var files = evt.target.files; // FileList object
+
+    initAnimSheet(files.length);
 
     // files is a FileList of File objects. List some properties.
     var output = [];
@@ -63,8 +64,8 @@ function handleFileSelect(evt) {
 
     var reader = new FileReader();
     reader.onloadend  = handleReaderLoadEnd;
-     
-    reader.readAsDataURL(f);           
+    
+    reader.readAsDataURL(f);
     }
     
     document.getElementById('list').innerHTML = '<ul>' + output.join('') + '</ul>';
